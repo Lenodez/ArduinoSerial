@@ -15,10 +15,10 @@ namespace ArduinoSerial
         public Form2()
         {
             InitializeComponent();
-            
+
 
         }
-        
+
 
         private void Form2_Load(object sender, EventArgs e)
         {
@@ -50,7 +50,7 @@ namespace ArduinoSerial
         {
             int shags = Int32.Parse(textBox2.Text);
             int speed = Int32.Parse(speed_box.Text);
-            
+
             serialPort1.WriteLine($"P{shags} {speed}");
             label1.Text = ($"P{shags} {speed}");
         }
@@ -91,5 +91,14 @@ namespace ArduinoSerial
                 e.Handled = true;
             }
         }
+
+        private void Set_accel_Click(object sender, EventArgs e)
+        {
+            int speed_accel = Int32.Parse((string)Acceleration_Box.SelectedItem);
+            
+
+            serialPort1.WriteLine($"A{speed_accel}");
+            label1.Text = ($"A{speed_accel}");
+        }
     }
-}
+    }
