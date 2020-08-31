@@ -48,29 +48,20 @@ namespace ArduinoSerial
 
         private void button5_Click(object sender, EventArgs e)
         {
-            int microns = Int32.Parse(textBox2.Text);
-            int high = 0;
-            int mid = 0;
-            double low = 0;
-            high = microns / 10000;
-            mid = (microns - (high * 10000)) / 1000;
-            low = Math.Round((microns % 1000) / 0.71875);
-            serialPort1.WriteLine($"1 {low} {mid} {high}");
-            label1.Text = ($"1 {low} {mid} {high}");
+            int shags = Int32.Parse(textBox2.Text);
+            int speed = Int32.Parse(speed_box.Text);
+            
+            serialPort1.WriteLine($"P{shags} {speed}");
+            label1.Text = ($"P{shags} {speed}");
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            int microns = Int32.Parse(textBox2.Text);
-            int high = 0;
-            int mid = 0;
-            double low = 0;
-            high = microns / 10000;
-            mid = (microns - (high * 10000)) / 1000;
-            low = Math.Round((microns % 1000) / 0.71875);
-            //low = (microns - (high * 10000) - (mid * 1000));
-            serialPort1.WriteLine($"2 {low} {mid} {high}");
-            label1.Text = ($"2 {low} {mid} {high}");
+            int shags = Int32.Parse(textBox2.Text);
+            int speed = Int32.Parse(speed_box.Text);
+
+            serialPort1.WriteLine($"N{shags} {speed}");
+            label1.Text = ($"N{shags} {speed}");
         }
 
         private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
@@ -90,6 +81,15 @@ namespace ArduinoSerial
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void speed_box_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number) && number != 8) // цифры и клавиша BackSpace
+            {
+                e.Handled = true;
+            }
         }
     }
 }
