@@ -100,5 +100,10 @@ namespace ArduinoSerial
             serialPort1.WriteLine($"A{speed_accel}");
             label1.Text = ($"A{speed_accel}");
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            serialPort1.WriteLine($"S");
+        }
     }
     }
