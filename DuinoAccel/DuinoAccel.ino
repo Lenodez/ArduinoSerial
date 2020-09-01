@@ -29,7 +29,7 @@ char receivedCommand;
 int directionMultiplier = 1; // = 1: positive direction, = -1: negative direction
 bool newData, runallowed = false; // booleans for new data from serial, and runallowed flag
 AccelStepper stepper(1, 5, 2);// direction Digital 9 (CCW), pulses Digital 8 (CLK)
- 
+
 void setup()
 {
     Serial.begin(9600); //define baud rate
