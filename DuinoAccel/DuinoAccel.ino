@@ -32,7 +32,7 @@ AccelStepper stepper(1, 5, 2);// direction Digital 9 (CCW), pulses Digital 8 (CL
  
 void setup()
 {
-    Serial.begin(9600); //define baud rate
+    Serial.begin(115200); //define baud rate
     
     
  
