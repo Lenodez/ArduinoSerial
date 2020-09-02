@@ -38,6 +38,7 @@
             // 
             // serialPort1
             // 
+            this.serialPort1.BaudRate = 115200;
             this.serialPort1.PortName = "COM5";
             // 
             // contextMenuStrip1
