@@ -38,8 +38,8 @@ void setup()
 
   //setting up some default values for maximum speed and maximum acceleration
 
-  stepper.setMaxSpeed(800); //SPEED = Steps / second
-  stepper.setAcceleration(800); //ACCELERATION = Steps /(second)^2
+  stepper.setMaxSpeed(3200); //SPEED = Steps / second
+  stepper.setAcceleration(1600); //ACCELERATION = Steps /(second)^2
   stepper.setEnablePin(8);
   stepper.setPinsInverted(false, false, true);
   stepper.disableOutputs(); //disable outputs
