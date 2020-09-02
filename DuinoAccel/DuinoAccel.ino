@@ -27,7 +27,7 @@ char receivedCommand;
 //-------------------------------------------------------------------------------
 
 int directionMultiplier = 1; // = 1: positive direction, = -1: negative direction
-bool newData, runallowed = false; // booleans for new data from serial, and runallowed flag
+bool newData, runallowed, needcool = false; // booleans for new data from serial, and runallowed flag
 AccelStepper stepper(1, 5, 2);// direction Digital 9 (CCW), pulses Digital 8 (CLK)
 const int enblpin = 8;
 void setup()
@@ -72,13 +72,17 @@ void RunTheMotor() //function for the motor
 
 void cooling() // function for the cooling
 {
+  if (needcool == true)
+  {
   if (stepper.isRunning() == false) // check is motor moving or not
   {
     stepper.disableOutputs();
+    needcool = false;
   }
   else
   {
     return;
+  }
   }
 }
 
@@ -93,6 +97,7 @@ void checkSerial() //function for receiving the commands
 
     if (newData == true) //we only enter this long switch-case statement if there is a new command from the computer
     {
+      
       switch (receivedCommand) //we check what is the command
       {
 
