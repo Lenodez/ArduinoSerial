@@ -52,7 +52,7 @@ void loop()
 
   checkSerial(); //check serial port for new commands
   RunTheMotor(); //function to handle the motor
-  cooling();
+  cooling(); //cool the motor
 }
 
 
@@ -70,11 +70,10 @@ void RunTheMotor() //function for the motor
   }
 }
 
-void cooling()
+void cooling() // function for the cooling
 {
-  if (stepper.isRunning() == false)
+  if (stepper.isRunning() == false) // check is motor moving or not
   {
-    
     stepper.disableOutputs();
   }
   else
@@ -102,9 +101,9 @@ void checkSerial() //function for receiving the commands
           receivedSteps = Serial.parseInt(); //value for the steps
           receivedSpeed = Serial.parseInt(); //value for the speed
           directionMultiplier = 1; //We define the direction
-          Serial.println("Positive direction."); //print the action          
+          Serial.println("Positive direction."); //print the action
           RotateRelative(); //Run the function
-          
+
           //example: P2000 400 - 2000 steps (5 revolution with 400 step/rev microstepping) and 400 steps/s speed
 
           break;
@@ -223,7 +222,7 @@ void RotateRelative()
   runallowed = true; //allow running - this allows entering the RunTheMotor() function.
   stepper.setMaxSpeed(receivedSpeed); //set speed
   stepper.move(directionMultiplier * receivedSteps); //set relative distance and direction
-  
+
 }
 
 
