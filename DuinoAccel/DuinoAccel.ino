@@ -84,6 +84,10 @@ void cooling() // function for the cooling
     return;
   }
   }
+  else
+  {
+    return;
+  }
 }
 
 
@@ -97,7 +101,7 @@ void checkSerial() //function for receiving the commands
 
     if (newData == true) //we only enter this long switch-case statement if there is a new command from the computer
     {
-      
+      needcool = true;
       switch (receivedCommand) //we check what is the command
       {
 
