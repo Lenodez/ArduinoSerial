@@ -103,7 +103,7 @@ namespace ArduinoSerial
 
         private void button2_Click(object sender, EventArgs e)
         {
-            serialPort1.WriteLine($"S");
+            serialPort1.WriteLine($"U");
         }
     }
     }
