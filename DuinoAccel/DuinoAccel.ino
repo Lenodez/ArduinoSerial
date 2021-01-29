@@ -1,23 +1,7 @@
 
-//Default stepping = 1600 step/revolution.
-
-
-
-//character for commands
-/*
-     'C' : Prints all the commands and their functions.
-     'P' : Rotates the motor in positive (CW) direction, relative.
-     'N' : Rotates the motor in negative (CCW) direction, relative.
-     'R' : Rotates the motor to an absolute positive position (+).
-     'r' : Rotates the motor to an absolute negative position (-).
-     'S' : Stops the motor immediately.
-     'A' : Sets an acceleration value.
-     'L' : Prints the current position/location of the motor.
-     'H' : Goes back to 0 position from the current position (homing).
-     'U' : Updates the position current position and makes it as the new 0 position.
-*/
-
 #include <AccelStepper.h>
+
+
 
 //User-defined values
 long receivedSteps = 0; //Number of steps
@@ -27,22 +11,31 @@ char receivedCommand;
 //-------------------------------------------------------------------------------
 
 int directionMultiplier = 1; // = 1: positive direction, = -1: negative direction
-bool newData, runallowed, needcool = false; // booleans for new data from serial, and runallowed flag
-AccelStepper stepper(1, 5, 2);// direction Digital 9 (CCW), pulses Digital 8 (CLK)
-const int enblpin = 8;
+bool newData, runallowed, runallowed1, needcool = false, needcool1 = false; // booleans for new data from serial, and runallowed flag
+AccelStepper stepper(AccelStepper::DRIVER, 8, 7);
+AccelStepper stepper1(AccelStepper::DRIVER, 6, 5);
+const int enblpin = 10;
+const int enblpin1 = 11;
 void setup()
 {
   Serial.begin(115200); //define baud rate
 
   pinMode(enblpin, OUTPUT);
+  pinMode(enblpin1, OUTPUT);
 
   //setting up some default values for maximum speed and maximum acceleration
 
   stepper.setMaxSpeed(3200); //SPEED = Steps / second
   stepper.setAcceleration(1600); //ACCELERATION = Steps /(second)^2
-  stepper.setEnablePin(8);
+  stepper.setEnablePin(10);
   stepper.setPinsInverted(false, false, true);
   stepper.disableOutputs(); //disable outputs
+
+  stepper1.setMaxSpeed(3200); //SPEED = Steps / second
+  stepper1.setAcceleration(1600); //ACCELERATION = Steps /(second)^2
+  stepper1.setEnablePin(11);
+  stepper1.setPinsInverted(false, false, true);
+  stepper1.disableOutputs(); //disable outputs
 }
 
 void loop()
@@ -53,6 +46,8 @@ void loop()
   checkSerial(); //check serial port for new commands
   RunTheMotor(); //function to handle the motor
   cooling(); //cool the motor
+  RunTheMotor1(); //function to handle the motor
+  cooling1(); //cool the motor
 }
 
 
@@ -69,6 +64,19 @@ void RunTheMotor() //function for the motor
     return;
   }
 }
+void RunTheMotor1() //function for the motor
+{
+  if (runallowed1 == true)
+  {
+    stepper1.enableOutputs(); //enable pins
+    stepper1.run(); //step the motor (this will step the motor by 1 step at each loop)
+  }
+  else //program enters this part if the runallowed is FALSE, we do not do anything
+  {
+    stepper1.disableOutputs(); //disable outputs
+    return;
+  }
+}
 
 void cooling() // function for the cooling
 {
@@ -78,6 +86,25 @@ void cooling() // function for the cooling
   {
     stepper.disableOutputs();
     needcool = false;
+  }
+  else
+  {
+    return;
+  }
+  }
+  else
+  {
+    return;
+  }
+}
+void cooling1() // function for the cooling
+{
+  if (needcool == true)
+  {
+  if (stepper1.isRunning() == false) // check is motor moving or not
+  {
+    stepper1.disableOutputs();
+    needcool1 = false;
   }
   else
   {
@@ -102,6 +129,7 @@ void checkSerial() //function for receiving the commands
     if (newData == true) //we only enter this long switch-case statement if there is a new command from the computer
     {
       needcool = true;
+      needcool1 = true;
       switch (receivedCommand) //we check what is the command
       {
 
@@ -129,24 +157,23 @@ void checkSerial() //function for receiving the commands
 
           break;
 
-        case 'R': //R uses the moveTo() function of the AccelStepper library, which means that it moves absolutely to the current position.
-
-          receivedSteps = Serial.parseInt(); //value for the steps
-          receivedSpeed = Serial.parseInt(); //value for the speed
-          directionMultiplier = 1; //We define the direction
-          Serial.println("Absolute position (+)."); //print the action
-          RotateAbsolute(); //Run the function
-
-          //example: R800 400 - It moves to the position which is located at +800 steps away from 0.
-          break;
-
-        case 'r': //r uses the moveTo() function of the AccelStepper library, which means that it moves absolutely to the current position.
+        case 'R': 
 
           receivedSteps = Serial.parseInt(); //value for the steps
           receivedSpeed = Serial.parseInt(); //value for the speed
           directionMultiplier = -1; //We define the direction
-          Serial.println("Absolute position (-)."); //print the action
-          RotateAbsolute(); //Run the function
+          Serial.println("Negative direction."); //print action
+          RotateRelative1(); //Run the function
+          //example: R800 400 - It moves to the position which is located at +800 steps away from 0.
+          break;
+
+        case 'r': 
+
+          receivedSteps = Serial.parseInt(); //value for the steps
+          receivedSpeed = Serial.parseInt(); //value for the speed
+          directionMultiplier = 1; //We define the direction
+          Serial.println("Positive direction."); //print the action
+          RotateRelative1(); //Run the function
 
           //example: r800 400 - It moves to the position which is located at -800 steps away from 0.
           break;
@@ -157,46 +184,35 @@ void checkSerial() //function for receiving the commands
           stepper.disableOutputs(); //disable power
           Serial.println("Stopped."); //print action
           runallowed = false; //disable running
+          runallowed1 = false;
           break;
 
         case 'A': // Updates acceleration
 
           runallowed = false; //we still keep running disabled, since we just update a variable
+          runallowed1 = false;
           stepper.disableOutputs(); //disable power
+          stepper1.disableOutputs(); //disable power
           receivedAcceleration = Serial.parseInt(); //receive the acceleration from serial
           stepper.setAcceleration(receivedAcceleration); //update the value of the variable
+          stepper1.setAcceleration(receivedAcceleration); //update the value of the variable
           Serial.print("New acceleration value: "); //confirm update by message
           Serial.println(receivedAcceleration); //confirm update by message
-          break;
-
-        case 'L': //L: Location
-
-          runallowed = false; //we still keep running disabled
-          stepper.disableOutputs(); //disable power
-          Serial.print("Current location of the motor: ");//Print the message
-          Serial.println(stepper.currentPosition()); //Printing the current position in steps.
-          break;
-
-        case 'H': //H: Homing
-
-          runallowed = true;
-          Serial.println("Homing"); //Print the message
-          GoHome();// Run the function
           break;
 
         case 'U':
 
           runallowed = false; //we still keep running disabled
+          runallowed1 = false;
           stepper.disableOutputs(); //disable power
+          stepper1.disableOutputs(); //disable power
           stepper.setCurrentPosition(0); //Reset current position. "new home"
+          stepper1.setCurrentPosition(0); //Reset current position. "new home"
           Serial.print("The current position is updated to: "); //Print message
           Serial.println(stepper.currentPosition()); //Check position after reset.
           break;
 
-        case 'C':
-
-          PrintCommands(); //Print the commands for controlling the motor
-          break;
+        
 
         default:
 
@@ -234,7 +250,16 @@ void RotateRelative()
 
 }
 
+void RotateRelative1()
+{
+  //We move X steps from the current position of the stepper motor in a given direction.
+  //The direction is determined by the multiplier (+1 or -1)
 
+  runallowed1 = true; //allow running - this allows entering the RunTheMotor() function.
+  stepper1.setMaxSpeed(receivedSpeed); //set speed
+  stepper1.move(directionMultiplier * receivedSteps); //set relative distance and direction
+
+}
 
 void RotateAbsolute()
 {
@@ -246,19 +271,4 @@ void RotateAbsolute()
   runallowed = true; //allow running - this allows entering the RunTheMotor() function.
   stepper.setMaxSpeed(receivedSpeed); //set speed
   stepper.moveTo(directionMultiplier * receivedSteps); //set relative distance
-}
-
-void PrintCommands()
-{
-  //Printing the commands
-  Serial.println(" 'C' : Prints all the commands and their functions.");
-  Serial.println(" 'P' : Rotates the motor in positive (CW) direction, relative.");
-  Serial.println(" 'N' : Rotates the motor in negative (CCW) direction, relative.");
-  Serial.println(" 'R' : Rotates the motor to an absolute positive position (+).");
-  Serial.println(" 'r' : Rotates the motor to an absolute negative position (-).");
-  Serial.println(" 'S' : Stops the motor immediately.");
-  Serial.println(" 'A' : Sets an acceleration value.");
-  Serial.println(" 'L' : Prints the current position/location of the motor.");
-  Serial.println(" 'H' : Goes back to 0 position from the current position (homing).");
-  Serial.println(" 'U' : Updates the position current position and makes it as the new 0 position. ");
 }
