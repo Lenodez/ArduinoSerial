@@ -11,7 +11,8 @@ char receivedCommand;
 //-------------------------------------------------------------------------------
 
 int directionMultiplier = 1; // = 1: positive direction, = -1: negative direction
-bool newData, runallowed, runallowed1, needcool = false, needcool1 = false; // booleans for new data from serial, and runallowed flag
+bool newData, needcool = false, needcool1 = false; // booleans for new data from serial, and runallowed flag
+bool runallowed, runallowed1 = true;
 AccelStepper stepper(AccelStepper::DRIVER, 8, 7);
 AccelStepper stepper1(AccelStepper::DRIVER, 6, 5);
 const int enblpin = 10;
@@ -259,16 +260,4 @@ void RotateRelative1()
   stepper1.setMaxSpeed(receivedSpeed); //set speed
   stepper1.move(directionMultiplier * receivedSteps); //set relative distance and direction
 
-}
-
-void RotateAbsolute()
-{
-  //We move to an absolute position.
-  //The AccelStepper library keeps track of the position.
-  //The direction is determined by the multiplier (+1 or -1)
-
-
-  runallowed = true; //allow running - this allows entering the RunTheMotor() function.
-  stepper.setMaxSpeed(receivedSpeed); //set speed
-  stepper.moveTo(directionMultiplier * receivedSteps); //set relative distance
 }
