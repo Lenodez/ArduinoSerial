@@ -1,6 +1,27 @@
 
+//Default stepping = 1600 step/revolution.
+
+
+<<<<<<< HEAD
+=======
+
+//character for commands
+/*
+     'C' : Prints all the commands and their functions.
+     'P' : Rotates the motor in positive (CW) direction, relative.
+     'N' : Rotates the motor in negative (CCW) direction, relative.
+     'R' : Rotates the motor to an absolute positive position (+).
+     'r' : Rotates the motor to an absolute negative position (-).
+     'S' : Stops the motor immediately.
+     'A' : Sets an acceleration value.
+     'L' : Prints the current position/location of the motor.
+     'H' : Goes back to 0 position from the current position (homing).
+     'U' : Updates the position current position and makes it as the new 0 position.
+*/
+
 #include <AccelStepper.h>
 
+>>>>>>> parent of ab727ea... Работа с 2 осями
 //User-defined values
 long receivedSteps = 0; //Number of steps
 long receivedSpeed = 0; //Steps / second
@@ -10,12 +31,18 @@ char receivedCommand;
 
 int directionMultiplier = 1; // = 1: positive direction, = -1: negative direction
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool newData, needcool = false, needcool1 = false; // booleans for new data from serial, and runallowed flag
 bool runallowed, runallowed1 = true;
 AccelStepper stepper(AccelStepper::DRIVER, 8, 7);
 AccelStepper stepper1(AccelStepper::DRIVER, 6, 5);
 const int enblpin = 10;
 const int enblpin1 = 11;
+=======
+bool newData, runallowed, needcool = false; // booleans for new data from serial, and runallowed flag
+AccelStepper stepper(1, 5, 2);// direction Digital 9 (CCW), pulses Digital 8 (CLK)
+const int enblpin = 8;
+>>>>>>> parent of ab727ea... Работа с 2 осями
 =======
 bool newData, runallowed, needcool = false; // booleans for new data from serial, and runallowed flag
 AccelStepper stepper(1, 5, 2);// direction Digital 9 (CCW), pulses Digital 8 (CLK)
@@ -225,6 +252,10 @@ void RotateRelative()
 
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of ab727ea... Работа с 2 осями
 
 void RotateAbsolute()
 {

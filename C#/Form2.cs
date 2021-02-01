@@ -98,5 +98,9 @@ namespace ArduinoSerial
         {
             serialPort1.WriteLine($"U");
         }
+<<<<<<< HEAD
+=======
+    }
+>>>>>>> parent of ab727ea... Работа с 2 осями
     }
 }
