@@ -1,4 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ArduinoSerial
@@ -88,7 +95,7 @@ namespace ArduinoSerial
         private void Set_accel_Click(object sender, EventArgs e)
         {
             int speed_accel = Int32.Parse((string)Acceleration_Box.SelectedItem);
-
+            
 
             serialPort1.WriteLine($"A{speed_accel}");
             label1.Text = ($"A{speed_accel}");
@@ -98,9 +105,23 @@ namespace ArduinoSerial
         {
             serialPort1.WriteLine($"U");
         }
-<<<<<<< HEAD
-=======
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            int shags = Int32.Parse(textBox2.Text);
+            int speed = Int32.Parse(speed_box.Text);
+
+            serialPort1.WriteLine($"R{shags} {speed}");
+            label1.Text = ($"R{shags} {speed}");
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            int shags = Int32.Parse(textBox2.Text);
+            int speed = Int32.Parse(speed_box.Text);
+
+            serialPort1.WriteLine($"r{shags} {speed}");
+            label1.Text = ($"r{shags} {speed}");
+        }
     }
->>>>>>> parent of ab727ea... Работа с 2 осями
     }
-}
