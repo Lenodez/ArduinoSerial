@@ -1,22 +1,4 @@
 
-//Default stepping = 1600 step/revolution.
-
-
-
-//character for commands
-/*
-     'C' : Prints all the commands and their functions.
-     'P' : Rotates the motor in positive (CW) direction, relative.
-     'N' : Rotates the motor in negative (CCW) direction, relative.
-     'R' : Rotates the motor to an absolute positive position (+).
-     'r' : Rotates the motor to an absolute negative position (-).
-     'S' : Stops the motor immediately.
-     'A' : Sets an acceleration value.
-     'L' : Prints the current position/location of the motor.
-     'H' : Goes back to 0 position from the current position (homing).
-     'U' : Updates the position current position and makes it as the new 0 position.
-*/
-
 #include <AccelStepper.h>
 
 //User-defined values
@@ -244,9 +226,6 @@ void RotateRelative()
 }
 
 
-<<<<<<< HEAD
-=======
-
 void RotateAbsolute()
 {
   //We move to an absolute position.
@@ -272,5 +251,4 @@ void PrintCommands()
   Serial.println(" 'L' : Prints the current position/location of the motor.");
   Serial.println(" 'H' : Goes back to 0 position from the current position (homing).");
   Serial.println(" 'U' : Updates the position current position and makes it as the new 0 position. ");
->>>>>>> parent of ab727ea... Работа с 2 осями
 }
