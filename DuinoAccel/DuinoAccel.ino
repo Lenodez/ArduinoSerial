@@ -82,15 +82,15 @@ void cooling() // function for the cooling
 {
   if (needcool == true)
   {
-  if (stepper.isRunning() == false) // check is motor moving or not
-  {
-    stepper.disableOutputs();
-    needcool = false;
-  }
-  else
-  {
-    return;
-  }
+    if (stepper.isRunning() == false) // check is motor moving or not
+    {
+      stepper.disableOutputs();
+      needcool = false;
+    }
+    else
+    {
+      return;
+    }
   }
   else
   {
@@ -101,15 +101,15 @@ void cooling1() // function for the cooling
 {
   if (needcool == true)
   {
-  if (stepper1.isRunning() == false) // check is motor moving or not
-  {
-    stepper1.disableOutputs();
-    needcool1 = false;
-  }
-  else
-  {
-    return;
-  }
+    if (stepper1.isRunning() == false) // check is motor moving or not
+    {
+      stepper1.disableOutputs();
+      needcool1 = false;
+    }
+    else
+    {
+      return;
+    }
   }
   else
   {
@@ -157,7 +157,7 @@ void checkSerial() //function for receiving the commands
 
           break;
 
-        case 'R': 
+        case 'R':
 
           receivedSteps = Serial.parseInt(); //value for the steps
           receivedSpeed = Serial.parseInt(); //value for the speed
@@ -167,7 +167,7 @@ void checkSerial() //function for receiving the commands
           //example: R800 400 - It moves to the position which is located at +800 steps away from 0.
           break;
 
-        case 'r': 
+        case 'r':
 
           receivedSteps = Serial.parseInt(); //value for the steps
           receivedSpeed = Serial.parseInt(); //value for the speed
@@ -212,7 +212,7 @@ void checkSerial() //function for receiving the commands
           Serial.println(stepper.currentPosition()); //Check position after reset.
           break;
 
-        
+
 
         default:
 
