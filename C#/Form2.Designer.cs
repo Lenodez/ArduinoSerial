@@ -43,8 +43,6 @@
             this.button4 = new System.Windows.Forms.Button();
             this.Acceleration_Box = new System.Windows.Forms.ComboBox();
             this.Set_accel = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -127,7 +125,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(82, 159);
+            this.button2.Location = new System.Drawing.Point(82, 140);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(112, 26);
             this.button2.TabIndex = 36;
@@ -177,33 +175,11 @@
             this.Set_accel.UseVisualStyleBackColor = true;
             this.Set_accel.Click += new System.EventHandler(this.Set_accel_Click);
             // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(22, 108);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(112, 26);
-            this.button7.TabIndex = 41;
-            this.button7.Text = "От двигателя";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
-            // button8
-            // 
-            this.button8.Location = new System.Drawing.Point(140, 108);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(112, 26);
-            this.button8.TabIndex = 42;
-            this.button8.Text = "К двигателю";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
-            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(561, 383);
-            this.Controls.Add(this.button8);
-            this.Controls.Add(this.button7);
             this.Controls.Add(this.Set_accel);
             this.Controls.Add(this.Acceleration_Box);
             this.Controls.Add(this.button4);
@@ -243,7 +219,5 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.ComboBox Acceleration_Box;
         private System.Windows.Forms.Button Set_accel;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
     }
 }
