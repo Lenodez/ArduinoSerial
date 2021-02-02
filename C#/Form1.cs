@@ -49,7 +49,13 @@ namespace ArduinoSerial
             Hide();
         }
 
-
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form3 f = new Form3();
+            f.Owner = this;
+            f.Show();
+            Hide();
+        }
     }
 }
 
