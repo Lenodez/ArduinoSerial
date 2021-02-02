@@ -85,14 +85,6 @@ void RunFunction()
 void loop() {
 
   checkSerial();
-  // первый мотор
-  stepper1.tick();
-
-  // второй крутим туды-сюды (-1000, 1000)
-  if (!stepper2.tick()) {
-    static bool dir;
-    dir = !dir;
-    stepper2.setTarget(dir ? -20000 : 20000);
-  }
+  RunFunction();
 
 }
