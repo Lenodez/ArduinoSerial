@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ArduinoSerial
@@ -40,20 +33,26 @@ namespace ArduinoSerial
         private void button6_Click(object sender, EventArgs e)
         {
             int k = 1; // Коэффициент перевода десятых миллиметра в шаги
-            int xSpeed = Int32.Parse(x_speed.Text);
-            int xLenght = Int32.Parse(x_lenght.Text);
-            int xShift = Int32.Parse(x_shift.Text);
-            int yLenght = Int32.Parse(y_lenght.Text);
-            int yShift = Int32.Parse(y_shift.Text);
-            int repeat = Int32.Parse(R.Text);
+            int xSpeed = Int32.Parse(x_speed.Text); // Скорость по X
+            int xLenght = Int32.Parse(x_lenght.Text); // Длина стекла по X
+            int xShift = Int32.Parse(x_shift.Text); // Длина смещения по X
+            int yLenght = Int32.Parse(y_lenght.Text); // Длина стекла по Y
+            int yShift = Int32.Parse(y_shift.Text); // Длина смещения по Y
+            int repeat = Int32.Parse(R.Text); // Количество повторов операции
 
-            float move_on_x = xLenght * 10 / xShift;
-            float move_on_y = yLenght * 10 / yShift;
-            int dx = xShift * k;
-            int dy = yShift * k;
-            float ud = (6000 * xShift) / xSpeed;
+            float move_on_x = xLenght * 10 / xShift; // Количество смещений по X
+            float move_on_y = yLenght * 10 / yShift; // Количество смещений по Y
+            int dx = xShift * k; // Длина смещения в Шагах по X
+            int dy = yShift * k; // Длина смещения в шагах по Y
+            float ud = (6000 * xShift) / xSpeed; // Задержка между передвижениями по X
             //serialPort1.WriteLine($"N{""} {""}");
             labelTest.Text = ($"O{repeat} {move_on_x} {dx} {ud} {move_on_y} {dy}");
+            //отладочная строчка
+        }
+
+        private void Form3_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
