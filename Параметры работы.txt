@@ -17,4 +17,9 @@ xLenght / xShift = move_on_x
 yLenght / yShift = move_on_y
 xShift * k = dx
 yShift * k = dy
+xSpeed * 10/ (xShift) = количество смещений в минуту
+(60/(xSpeed * 10/ (xShift))) * 1000 = ud 
 
+
+6000 * xShift
+xSp

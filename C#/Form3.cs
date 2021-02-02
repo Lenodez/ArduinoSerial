@@ -39,6 +39,7 @@ namespace ArduinoSerial
 
         private void button6_Click(object sender, EventArgs e)
         {
+            int k = 1; // Коэффициент перевода десятых миллиметра в шаги
             int xSpeed = Int32.Parse(x_speed.Text);
             int xLenght = Int32.Parse(x_lenght.Text);
             int xShift = Int32.Parse(x_shift.Text);
@@ -46,8 +47,13 @@ namespace ArduinoSerial
             int yShift = Int32.Parse(y_shift.Text);
             int repeat = Int32.Parse(R.Text);
 
-            serialPort1.WriteLine($"N{""} {""}");
-            label1.Text = ($"N{""} {""}");
+            float move_on_x = xLenght * 10 / xShift;
+            float move_on_y = yLenght * 10 / yShift;
+            int dx = xShift * k;
+            int dy = yShift * k;
+            float ud = (6000 * xShift) / xSpeed;
+            //serialPort1.WriteLine($"N{""} {""}");
+            labelTest.Text = ($"O{repeat} {move_on_x} {dx} {ud} {move_on_y} {dy}");
         }
     }
 }
