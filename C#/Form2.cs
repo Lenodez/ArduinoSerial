@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ArduinoSerial
@@ -95,7 +88,7 @@ namespace ArduinoSerial
         private void Set_accel_Click(object sender, EventArgs e)
         {
             int speed_accel = Int32.Parse((string)Acceleration_Box.SelectedItem);
-            
+
 
             serialPort1.WriteLine($"A{speed_accel}");
             label1.Text = ($"A{speed_accel}");
@@ -124,4 +117,4 @@ namespace ArduinoSerial
             label1.Text = ($"r{shags} {speed}");
         }
     }
-    }
+}
