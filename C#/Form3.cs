@@ -13,13 +13,13 @@ namespace ArduinoSerial
         private void Form3_Load(object sender, EventArgs e)
         {
             Form1 main = this.Owner as Form1;
-            if (!serialPort1.IsOpen)
+            //if (!serialPort1.IsOpen)
 
-            {
-                serialPort1.PortName = (string)main.comboBox2.SelectedItem;
-                serialPort1.Open();
+            //{
+              //  serialPort1.PortName = (string)main.comboBox2.SelectedItem;
+                //serialPort1.Open();
 
-            }
+            //}
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -30,7 +30,7 @@ namespace ArduinoSerial
             Hide();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        public void button6_Click(object sender, EventArgs e)
         {
             int k = 1; // Коэффициент перевода десятых миллиметра в шаги
             int xSpeed = Int32.Parse(x_speed.Text); // Скорость по X
@@ -45,14 +45,45 @@ namespace ArduinoSerial
             int dx = xShift * k; // Длина смещения в Шагах по X
             int dy = yShift * k; // Длина смещения в шагах по Y
             float ud = (6000 * xShift) / xSpeed; // Задержка между передвижениями по X
-            //serialPort1.WriteLine($"N{""} {""}");
-            labelTest.Text = ($"O{repeat} {move_on_x} {dx} {ud} {move_on_y} {dy}");
-            //отладочная строчка
+            
+            int[] myIntArray = {repeat, (int)move_on_x, dx, (int)ud, (int)move_on_y, dy};
+            Commands_Sender(myIntArray);
         }
 
         private void Form3_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
         }
+
+        public void Commands_Sender(params int[] list)
+        {
+            for (int i = 0; i < list.Length; i++) { }
+            int repeat = list[0];
+            int move_on_x = list[1];
+            int dx = list[2];
+            int ud = list[3];
+            int move_on_y = list[4];
+            int dy = list[5];
+            for (int i = 0; i < repeat; i++)
+            {
+                for (int j = 0; j < move_on_y; j++)
+                {
+                    for (int k = 0; k < move_on_x; k++)
+                    {
+                        serialPort1.WriteLine($"F{dx}");
+                        System.Threading.Thread.Sleep(ud);
+                        dx += dx;
+                    }
+                    serialPort1.WriteLine($"S{dy}");
+                    dx = -dx;
+                    dy += dy;
+                }
+                serialPort1.WriteLine($"F{-dx}");
+                serialPort1.WriteLine($"S{-dy}");
+            }
+
+        }
+
+
     }
 }
