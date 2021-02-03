@@ -12,7 +12,6 @@ long posx = 0;
 long posy = 0;
 char receivedCommand;
 bool newData;
-bool runallowed = false;
 GStepper<STEPPER2WIRE> stepper1(200, 8, 7, 10);
 GStepper<STEPPER2WIRE> stepper2(200, 6, 5, 11);
 
@@ -36,7 +35,6 @@ void checkSerial() //function for receiving the commands
   {
     receivedCommand = Serial.read(); // pass the value to the receivedCommad variable
     newData = true; //indicate that there is a new data by setting this bool to true
-    runallowed = true;
 
     if (newData == true) //we only enter this long switch-case statement if there is a new command from the computer
     {
@@ -64,33 +62,12 @@ void checkSerial() //function for receiving the commands
   }
 }
 
-void RunFunction()
-{
-  if (runallowed = true) {
-    for (byte r = 0; r < R; r++) {
-      for (long my = 0; my < move_on_y; my++) {
-        for (long mx = 0; mx < move_on_x; mx++) {
-          if (!stepper1.tick()) {
-            stepper1.setTarget(dx, RELATIVE);
-            delay(ud);
-            posx = posx + dx;
-          }
-        }
-        stepper2.setTarget(dy, RELATIVE);
-        dx = -dx;
-        posy = posy + dy;
-      }
-      stepper1.setTarget(-posx, RELATIVE);
-      stepper2.setTarget(-posy, RELATIVE);
-    }
-    runallowed = false;
-  }
-  
-}
+
 
 void loop() {
+  stepper1.tick();
+  stepper2.tick();
 
   checkSerial();
-  RunFunction();
 
 }
