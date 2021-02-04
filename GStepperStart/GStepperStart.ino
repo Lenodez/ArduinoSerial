@@ -12,8 +12,8 @@ long posx = 0;
 long posy = 0;
 char receivedCommand;
 bool newData;
-GStepper<STEPPER2WIRE> stepper1(200, 8, 7, 10);
-GStepper<STEPPER2WIRE> stepper2(200, 6, 5, 11);
+GStepper<STEPPER2WIRE> stepper1(200, 8, 7);
+GStepper<STEPPER2WIRE> stepper2(200, 6, 5);
 
 void setup() {
   // мотор 1 просто вращается
