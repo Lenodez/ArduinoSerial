@@ -42,15 +42,14 @@ void checkSerial() //function for receiving the commands
       switch (receivedCommand) //we check what is the command
       {
 
-        case 'O':
-
-          R = Serial.parseInt(); // количество повторений
-          move_on_x = Serial.parseInt(); // количество смещений по X
+        case 'F':
           dx = Serial.parseInt(); // Длина смещения по X
-          ud = Serial.parseInt(); // Задержка между смещениями
-          move_on_y = Serial.parseInt(); // Количество смещений по Y
-          dy = Serial.parseInt(); // Длина смещения по Y
+          stepper1.setTarget(dx);       
+          break;
 
+        case 'S':       
+          dy = Serial.parseInt(); // Длина смещения по Y
+          stepper2.setTarget(dy);
           break;
 
         default:
@@ -67,7 +66,6 @@ void checkSerial() //function for receiving the commands
 void loop() {
   stepper1.tick();
   stepper2.tick();
-
   checkSerial();
 
 }

@@ -13,13 +13,13 @@ namespace ArduinoSerial
         private void Form3_Load(object sender, EventArgs e)
         {
             Form1 main = this.Owner as Form1;
-            //if (!serialPort1.IsOpen)
+            if (!serialPort1.IsOpen)
 
-            //{
-              //  serialPort1.PortName = (string)main.comboBox2.SelectedItem;
-                //serialPort1.Open();
+            {
+                serialPort1.PortName = (string)main.comboBox2.SelectedItem;
+                serialPort1.Open();
 
-            //}
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -32,7 +32,7 @@ namespace ArduinoSerial
 
         public void button6_Click(object sender, EventArgs e)
         {
-            int k = 1; // Коэффициент перевода десятых миллиметра в шаги
+            int k = 10; // Коэффициент перевода десятых миллиметра в шаги
             int xSpeed = Int32.Parse(x_speed.Text); // Скорость по X
             int xLenght = Int32.Parse(x_lenght.Text); // Длина стекла по X
             int xShift = Int32.Parse(x_shift.Text); // Длина смещения по X
@@ -64,22 +64,34 @@ namespace ArduinoSerial
             int ud = list[3];
             int move_on_y = list[4];
             int dy = list[5];
+            int current_x = 0;
+            int current_y = 0;
             for (int i = 0; i < repeat; i++)
             {
                 for (int j = 0; j < move_on_y; j++)
                 {
                     for (int k = 0; k < move_on_x; k++)
                     {
-                        serialPort1.WriteLine($"F{dx}");
+                        current_x += dx;
+                        serialPort1.WriteLine($"F{current_x}");
+                        labelTest.Text = ($"F{current_x}");
                         System.Threading.Thread.Sleep(ud);
-                        dx += dx;
+                        
                     }
-                    serialPort1.WriteLine($"S{dy}");
-                    dx = -dx;
-                    dy += dy;
+                    current_y += dy;
+                    serialPort1.WriteLine($"S{current_y}");
+                    labelTest.Text = ($"F{current_y}");
+                    System.Threading.Thread.Sleep(ud);
+                    current_x = -dx;
+                    
                 }
-                serialPort1.WriteLine($"F{-dx}");
-                serialPort1.WriteLine($"S{-dy}");
+                serialPort1.WriteLine($"F{-current_x}");
+                labelTest.Text = ($"F{-current_x}");
+                serialPort1.WriteLine($"S{-current_y}");
+                labelTest.Text = ($"F{-current_y}");
+                current_x = 0;
+                current_y = 0;
+
             }
 
         }
