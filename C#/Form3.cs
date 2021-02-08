@@ -32,21 +32,21 @@ namespace ArduinoSerial
 
         public void button6_Click(object sender, EventArgs e)
         {
-            int k = 10; // Коэффициент перевода десятых миллиметра в шаги
+            int k = 400; // Коэффициент перевода миллиметров в шаги
             int xSpeed = Int32.Parse(x_speed.Text); // Скорость по X
             int xLenght = Int32.Parse(x_lenght.Text); // Длина стекла по X
-            int xShift = Int32.Parse(x_shift.Text); // Длина смещения по X
+            float xShift = Int32.Parse(x_shift.Text); // Длина смещения по X
             int yLenght = Int32.Parse(y_lenght.Text); // Длина стекла по Y
-            int yShift = Int32.Parse(y_shift.Text); // Длина смещения по Y
+            float yShift = Int32.Parse(y_shift.Text); // Длина смещения по Y
             int repeat = Int32.Parse(R.Text); // Количество повторов операции
 
-            float move_on_x = xLenght * 10 / xShift; // Количество смещений по X
-            float move_on_y = yLenght * 10 / yShift; // Количество смещений по Y
-            int dx = xShift * k; // Длина смещения в Шагах по X
-            int dy = yShift * k; // Длина смещения в шагах по Y
-            float ud = (6000 * xShift) / xSpeed; // Задержка между передвижениями по X
+            float move_on_x = xLenght / xShift; // Количество смещений по X
+            float move_on_y = yLenght / yShift; // Количество смещений по Y
+            float dx = xShift * k; // Длина смещения в Шагах по X
+            float dy = yShift * k; // Длина смещения в шагах по Y
+            float ud = (60000 * xShift) / xSpeed; // Задержка между передвижениями по X
             
-            int[] myIntArray = {repeat, (int)move_on_x, dx, (int)ud, (int)move_on_y, dy};
+            int[] myIntArray = {repeat, (int)move_on_x, (int)dx, (int)ud, (int)move_on_y, (int)dy };
             Commands_Sender(myIntArray);
         }
 
