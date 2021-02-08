@@ -32,7 +32,7 @@ namespace ArduinoSerial
 
         public void button6_Click(object sender, EventArgs e)
         {
-            int k = 400; // Коэффициент перевода миллиметров в шаги
+            int k = 800; // Коэффициент перевода миллиметров в шаги
             int xSpeed = Int32.Parse(x_speed.Text); // Скорость по X
             int xLenght = Int32.Parse(x_lenght.Text); // Длина стекла по X
             float xShift = Int32.Parse(x_shift.Text); // Длина смещения по X
